@@ -1,0 +1,30 @@
+<div class="row">
+  <div class="col-md-8">
+    <h2>Pizzas</h2>
+    <ul class="list-group">
+      <li class="list-group-item"
+          *ngFor="let pizza of pizzas"
+          (click)="selectPizza(pizza)"
+          [class.active]="pizza === selectedPizza">
+
+          <div class="col-md-8">
+            <dt class="row">{{pizza.name}}</dt>
+            <dd class="row">{{pizza.ingredients}}</dd>
+          </div>
+          <div class="col-md-4">
+            {{pizza.price}}
+            <button type="button" class="btn btn-secondary">Add to cart</button>
+          </div>
+      </li>
+    </ul>
+    <button class="btn btn-warning" (click)="createNewPizza()">New</button>
+  </div>
+  <div *ngIf="selectedPizza" class="col-md-4">
+    <pizza-details
+        [pizza]="selectedPizza"
+        [createHandler]="addPizza"
+        [updateHandler]="updatePizza"
+        [deleteHandler]="deletePizza">
+    </pizza-details>
+  </div> 
+</div>

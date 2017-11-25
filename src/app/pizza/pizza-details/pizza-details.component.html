@@ -1,0 +1,25 @@
+<div *ngIf="pizza" class="row">
+  <div class="col-md-12">
+    <h2 *ngIf="pizza._id">Pizza Details</h2>
+    <h2 *ngIf="!pizza._id">New Pizza</h2>
+  </div>
+</div>
+<div *ngIf="pizza" class="row">
+  <form class="col-md-12">
+    <div class="form-group">
+      <label for="pizza-name">Name</label>
+      <input class="form-control" id="pizza-name" name="pizza-name" [(ngModel)]="pizza.name" placeholder="Name"/>
+    </div>
+    <div class="form-group">
+      <label for="pizza-ingredients">Ingredients</label>
+      <input class="form-control" id="pizza-ingredients" name="pizza-ingredients" [(ngModel)]="pizza.ingredients" placeholder="Ingredients"/>
+    </div>
+    <div class="form-group">
+      <label for="pizza-price">Price</label>
+      <input class="form-control" id="pizza-price" name="pizza-price" [(ngModel)]="pizza.price" placeholder="Price"/>
+    </div>
+    <button class="btn btn-primary" *ngIf="!pizza._id" (click)="createPizza(pizza)">Create</button>
+    <button class="btn btn-info" *ngIf="pizza._id" (click)="updatePizza(pizza)">Update</button>
+    <button class="btn btn-danger" *ngIf="pizza._id" (click)="deletePizza(pizza._id)">Delete</button>
+  </form>
+</div>
