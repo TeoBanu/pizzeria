@@ -7,13 +7,15 @@
           (click)="selectPizza(pizza)"
           [class.active]="pizza === selectedPizza">
 
-          <div class="col-md-8">
-            <dt class="row">{{pizza.name}}</dt>
-            <dd class="row">{{pizza.ingredients}}</dd>
-          </div>
-          <div class="col-md-4">
-            {{pizza.price}}
-            <button type="button" class="btn btn-secondary">Add to cart</button>
+          <div class="row">
+            <div class="col-md-10">
+              <dt class="row">{{pizza.name}}</dt>
+              <dd class="row">{{pizza.ingredients}}</dd>
+            </div>
+            <div class="col-md-2 text-center">
+              {{pizza.price}} RON
+              <!-- <button type="button" class="btn btn-secondary float-right">Add to cart</button> -->
+            </div>
           </div>
       </li>
     </ul>
