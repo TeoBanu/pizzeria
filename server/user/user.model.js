@@ -1,6 +1,7 @@
 import mongoose, {Schema} from "mongoose";
 import ModelHelper from "../model.helper";
 import AuthService from "../auth/auth.service";
+import NotFoundError from "../error/notFound";
 
 let UserSchema = new Schema({
         firstName: {
@@ -42,13 +43,17 @@ let UserSchema = new Schema({
 /**
  * Methods
  */
-UserSchema.methods.authenticate = function(password) {
+UserSchema.methods.authenticate = function (password) {
     // Authenticate - check if the passwords are the same
-        return AuthService.encryptPassword(this.salt, password)
-            .then((hashedPassword) => {
-                return Promise.resolve(this.password === hashedPassword);
-            });
-    };
+    return AuthService.encryptPassword(this.salt, password)
+        .then((hashedPassword) => {
+            if (this.password === hashedPassword) {
+                return Promise.resolve(this);
+            } else {
+                return Promise.reject(new NotFoundError())
+            }
+        });
+};
 
 let UserModel = mongoose.model('User', UserSchema);
 UserModel.clear = ModelHelper.clear(UserModel);

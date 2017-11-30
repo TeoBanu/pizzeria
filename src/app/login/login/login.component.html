@@ -1,3 +1,12 @@
-<p>
-  login works!
-</p>
+<div class="login">
+  <form class="col-md-12">
+    <div class="form-group">
+      <label for="email">E-mail</label>
+      <input type="email" class="form-control" id="email" name="email" [(ngModel)]="user.email" placeholder="E-mail"/>
+
+      <label for="password">Password</label>
+      <input type="password" class="form-control" id="password" name="password" [(ngModel)]="user.password" placeholder="Password"/>
+    </div>
+    <button class="btn btn-primary btn-lg btn-block" (click)="login(user)">Login</button>
+  </form>
+</div>
