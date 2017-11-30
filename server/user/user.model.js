@@ -23,17 +23,14 @@ let UserSchema = new Schema({
         salt: String,
         street: {
             type: String,
-            required: true,
             trim: true
         },
         city: {
             type: String,
-            required: true,
             trim: true,
         },
         phone: {
             type: String,
-            required: true,
             trim: true,
         }
     },

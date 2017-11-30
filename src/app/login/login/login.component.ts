@@ -6,8 +6,7 @@ import {User} from "../user";
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css'],
-  providers: [UserService]
+  styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
   user: User = new User();
@@ -20,7 +19,6 @@ export class LoginComponent implements OnInit {
 
   login(user: User) {
     this.userService.login(user).then((loggedInUser: User) => {
-      console.log("user " + user);
       this.router.navigate(['/']);
     });
   }

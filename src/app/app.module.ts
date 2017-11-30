@@ -12,6 +12,7 @@ import {RegisterComponent} from './login/register/register.component';
 import {AccountComponent} from './login/account/account.component';
 import {NavbarComponent} from './navbar/navbar.component';
 import {PageNotFoundComponent} from './page-not-found/page-not-found.component';
+import {UserService} from "./login/user.service";
 
 const appRoutes: Routes = [
     {path: 'register', component: RegisterComponent},
@@ -36,7 +37,7 @@ const appRoutes: Routes = [
         HttpModule,
         RouterModule.forRoot(appRoutes, {enableTracing: true})
     ],
-    providers: [],
+    providers: [UserService],
     bootstrap: [AppComponent]
 })
 export class AppModule {
