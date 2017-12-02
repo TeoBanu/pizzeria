@@ -10,7 +10,7 @@
                     </div>
                     <div class="col-md-2 text-center">
                         {{pizza.price}} RON
-                        <img *ngIf="isLoggedIn && !isAdmin" (click)="addToCart(pizza)" src="../../../assets/cart.png" width="20"/>
+                        <img (click)="addToCart(pizza)" src="../../../assets/cart.png" width="20"/>
                         <img *ngIf="isLoggedIn && isAdmin" (click)="selectPizza(pizza)" src="../../../assets/edit.svg" width="20"/>
                     </div>
                 </div>
@@ -25,5 +25,11 @@
             [updateHandler]="updatePizza"
             [deleteHandler]="deletePizza">
         </pizza-details>
+    </div>
+    <div *ngIf="isLoggedIn && !isAdmin && cart" class="col-md-4">
+      <cart
+        [cart]="cart"
+        [createHandler]="createOrder">
+      </cart>
     </div>
 </div>

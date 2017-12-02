@@ -79,16 +79,16 @@ app.post('/api/files/', FileService.create);
 app.delete('/api/files/:fileId', FileService.remove);
 
 // Create order
-app.post('api/order', OrderService.create);
+app.post('/api/order', OrderService.create);
 
 // Show order
-app.get('api/order/:id', OrderService.show);
+app.get('/api/order/:id', OrderService.show);
 
 // Show all orders
-app.get('api/order', OrderService.showAll);
+app.get('/api/order', OrderService.showAll);
 
 // Show orders for user
-app.get('api/order/:userId', OrderService.showAllByUserId);
+app.get('/api/order/:userId', OrderService.showAllByUserId);
 
 // Update order
-app.put('api/order/:id', OrderService.update);
+app.put('/api/order/:id', OrderService.update);

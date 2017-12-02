@@ -5,6 +5,7 @@ import _ from 'lodash';
 export default class OrderService {
 
     static create(req, res, next) {
+        console.log(req.body);
         let order = new Order(req.body);
         return order.save()
             .then(ServiceHelper.respondWithResult(res, 200))

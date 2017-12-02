@@ -1,15 +1,40 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
+import {Order} from './Order';
+import {OrderService} from './order.service';
+import {CartElement} from './cart-element';
 
 @Component({
   selector: 'cart',
   templateUrl: './cart.component.html',
-  styleUrls: ['./cart.component.css']
+  styleUrls: ['./cart.component.css'],
+  providers: [OrderService]
 })
-export class CartComponent implements OnInit {
+export class CartComponent {
+    @Input()
+    cart: Order;
 
-  constructor() { }
+    @Input()
+    createHandler: Function;
 
-  ngOnInit() {
-  }
+    constructor(private orderService: OrderService) {
+    }
+
+    createOrder() {
+       this.orderService.createOrder(this.cart).then((newOrder: Order) => {
+            this.createHandler(newOrder);
+        });
+    }
+
+    add(element: CartElement) {
+      ++element.count;
+    }
+
+    remove(element: CartElement) {
+      if(element.count === 1) {
+        this.cart.elements.splice(this.cart.elements.indexOf(element), 1);
+      } else {
+        --element.count;
+      }
+    }
 
 }

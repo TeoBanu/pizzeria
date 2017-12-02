@@ -8,10 +8,13 @@ let OrderSchema = new Schema({
             type: mongoose.Schema.Types.ObjectId,
             ref: User
         },
-        pizzas: {
+        elements: [{
+          pizza: {
             type: [mongoose.Schema.Types.ObjectId],
             ref: Pizza
-        },
+          },
+          count: Number
+        }],
         //minutes
         deliveryTime: {
             type: Number

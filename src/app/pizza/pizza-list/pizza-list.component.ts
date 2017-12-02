@@ -1,10 +1,11 @@
 import{Component, OnInit}from "@angular/core";
 import {Router} from "@angular/router";
-import {Pizza}from "../pizza";
-import {PizzaService}from "../pizza.service";
-import {UserService}from "../../login/user.service";
-import {Observable}from "rxjs";
-import {Order}from '../../cart/Order';
+import {Pizza} from "../pizza";
+import {PizzaService} from "../pizza.service";
+import {UserService} from "../../login/user.service";
+import {Observable} from "rxjs";
+import {Order} from '../../cart/Order';
+import {CartElement} from '../../cart/cart-element';
 
 @Component({
     selector: 'pizza-list',
@@ -66,9 +67,21 @@ export class PizzaListComponent implements OnInit {
         this.selectPizza(pizza);
     }
 
+    createNewCart(): Order {
+      let cartPizzas : Pizza[] = [];
+      let cartElements : CartElement[] = [];
+      return {userId: localStorage.getItem('id'), elements: cartElements, deliveryTime: "0"};
+    }
+
     addToCart(pizza: Pizza) {
       if(this.isLoggedIn) {
-        this.cart.pizzas.push(pizza);
+        if(!this.cart) {
+          this.cart = this.createNewCart();
+        }
+        let cartElement = this.cart.elements.filter(cartElem => cartElem.pizza === pizza);
+        if(cartElement.length === 0) {
+          this.cart.elements.push({pizza: pizza, count: 1});
+        }
       } else {
           this.router.navigate(['/register']);
       }
@@ -98,5 +111,9 @@ export class PizzaListComponent implements OnInit {
         }
         return this.pizzas;
     };
+
+    createOrder = (order: Order) => {
+      this.cart = this.createNewCart();
+    }
 
 }

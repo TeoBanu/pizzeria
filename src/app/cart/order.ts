@@ -1,7 +1,9 @@
 import {User} from '../login/User';
+import {CartElement} from './cart-element';
 import {Pizza} from '../pizza/Pizza';
+
 export class Order {
-  user: User;
-  pizzas: [Pizza];
-  deliveryTime: String
+  userId: string;
+  elements: CartElement[];
+  deliveryTime: string;
 }

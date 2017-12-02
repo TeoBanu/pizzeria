@@ -1,3 +1,27 @@
-<p>
-  cart works!
-</p>
+<div *ngIf="cart.elements && cart.elements.length !== 0" class="row">
+  <div class="col-md-12">
+    <ul class="list-group">
+      <li class="list-group-item"
+          *ngFor="let element of cart.elements">
+        <div class="row">
+          <div class="col-md-5 offset-md-1">
+            <dt class="row">{{element.pizza.name}}</dt>
+            <dd class="row">{{element.pizza.price}} RON</dd>
+          </div>
+          <div class="col-md-6">
+            <div class="row">
+              <div class="col-md-4">
+                <img (click)="add(element)" src="../../../assets/plus.png" width="32" height="32"/>
+              </div>
+              <dd class="col-md-4 text-center">{{element.count}}</dd>
+              <div class="col-md-4">
+                <img (click)="remove(element)" src="../../../assets/remove.png" width="32" height="32"/>
+              </div>
+            </div>
+          </div>
+        </div>
+      </li>
+    </ul>
+    <button class="btn btn-primary btn-lg btn-block" (click)="createOrder()">Order</button>
+  </div>
+</div>
