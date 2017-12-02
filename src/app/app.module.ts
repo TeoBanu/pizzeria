@@ -13,6 +13,7 @@ import {AccountComponent} from './login/account/account.component';
 import {NavbarComponent} from './navbar/navbar.component';
 import {PageNotFoundComponent} from './page-not-found/page-not-found.component';
 import {UserService} from "./login/user.service";
+import { CartComponent } from './cart/cart.component';
 
 const appRoutes: Routes = [
     {path: 'register', component: RegisterComponent},
@@ -29,7 +30,8 @@ const appRoutes: Routes = [
         RegisterComponent,
         AccountComponent,
         NavbarComponent,
-        PageNotFoundComponent
+        PageNotFoundComponent,
+        CartComponent
     ],
     imports: [
         BrowserModule,

@@ -1,6 +1,10 @@
-import {Component, OnInit} from "@angular/core";
-import {Pizza} from "../pizza";
-import {PizzaService} from "../pizza.service";
+import{Component, OnInit}from "@angular/core";
+import {Router} from "@angular/router";
+import {Pizza}from "../pizza";
+import {PizzaService}from "../pizza.service";
+import {UserService}from "../../login/user.service";
+import {Observable}from "rxjs";
+import {Order}from '../../cart/Order';
 
 @Component({
     selector: 'pizza-list',
@@ -11,13 +15,29 @@ import {PizzaService} from "../pizza.service";
 export class PizzaListComponent implements OnInit {
 
     pizzas: Pizza[] = [];
+    cart: Order;
     selectedPizza: Pizza;
+    isLoggedIn: boolean;
+    isAdmin: boolean;
 
-    constructor(private pizzaService: PizzaService) {
-        this.pizzas = [];
+
+    constructor(
+        private pizzaService: PizzaService,
+        private userService: UserService,
+        private router: Router) {
     }
 
     ngOnInit() {
+        this.userService.isLoggedIn().subscribe(
+            (isLoggedIn) => {
+                this.isLoggedIn = isLoggedIn;
+            }
+        );
+        this.userService.isAdmin().subscribe(
+            (isAdmin) => {
+                this.isAdmin = isAdmin;
+            }
+        );
         this.pizzaService
         .getPizzas()
         .then((pizzas: Pizza[]) => {
@@ -46,6 +66,14 @@ export class PizzaListComponent implements OnInit {
         this.selectPizza(pizza);
     }
 
+    addToCart(pizza: Pizza) {
+      if(this.isLoggedIn) {
+        this.cart.pizzas.push(pizza);
+      } else {
+          this.router.navigate(['/register']);
+      }
+    }
+
     deletePizza = (pizzaId: String) => {
         let idx = this.getIndexOfPizza(pizzaId);
         if (idx !== -1) {
@@ -70,4 +98,5 @@ export class PizzaListComponent implements OnInit {
         }
         return this.pizzas;
     };
+
 }

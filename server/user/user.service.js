@@ -17,7 +17,7 @@ export default class UserService {
     }
 
     static show(req, res, next) {
-        return User.find({_id: req.params.id})
+        return User.findOne({_id: req.params.id})
             .then(ServiceHelper.respondWithResult(res, 200))
             .catch(ServiceHelper.handleError(next, 404));
     }

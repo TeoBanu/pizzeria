@@ -32,6 +32,9 @@ let UserSchema = new Schema({
         phone: {
             type: String,
             trim: true,
+        },
+        isAdmin: {
+            type: Boolean
         }
     },
     {timestamps: true}

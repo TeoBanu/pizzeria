@@ -7,4 +7,5 @@ export class User {
 	street: string;
 	city: string;
 	phone: string;
+	isAdmin: boolean;
 }

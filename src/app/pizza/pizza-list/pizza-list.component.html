@@ -1,32 +1,29 @@
 <div class="row">
-  <div class="col-md-8">
-    <h2>Pizzas</h2>
-    <ul class="list-group">
-      <li class="list-group-item"
-          *ngFor="let pizza of pizzas"
-          (click)="selectPizza(pizza)"
-          [class.active]="pizza === selectedPizza">
-
-          <div class="row">
-            <div class="col-md-10">
-              <dt class="row">{{pizza.name}}</dt>
-              <dd class="row">{{pizza.ingredients}}</dd>
-            </div>
-            <div class="col-md-2 text-center">
-              {{pizza.price}} RON
-              <!-- <button type="button" class="btn btn-secondary float-right">Add to cart</button> -->
-            </div>
-          </div>
-      </li>
-    </ul>
-    <button class="btn btn-warning" (click)="createNewPizza()">New</button>
-  </div>
-  <div *ngIf="selectedPizza" class="col-md-4">
-    <pizza-details
-        [pizza]="selectedPizza"
-        [createHandler]="addPizza"
-        [updateHandler]="updatePizza"
-        [deleteHandler]="deletePizza">
-    </pizza-details>
-  </div> 
+    <div class="col-md-8">
+        <ul class="list-group">
+            <li class="list-group-item"
+                *ngFor="let pizza of pizzas">
+                <div class="row">
+                    <div class="col-md-10">
+                        <dt class="row">{{pizza.name}}</dt>
+                        <dd class="row">{{pizza.ingredients}}</dd>
+                    </div>
+                    <div class="col-md-2 text-center">
+                        {{pizza.price}} RON
+                        <img *ngIf="isLoggedIn && !isAdmin" (click)="addToCart(pizza)" src="../../../assets/cart.png" width="20"/>
+                        <img *ngIf="isLoggedIn && isAdmin" (click)="selectPizza(pizza)" src="../../../assets/edit.svg" width="20"/>
+                    </div>
+                </div>
+            </li>
+        </ul>
+        <button *ngIf="isLoggedIn && isAdmin" class="btn btn-warning" (click)="createNewPizza()">New</button>
+    </div>
+    <div *ngIf="isLoggedIn && isAdmin && selectedPizza" class="col-md-4">
+        <pizza-details
+            [pizza]="selectedPizza"
+            [createHandler]="addPizza"
+            [updateHandler]="updatePizza"
+            [deleteHandler]="deletePizza">
+        </pizza-details>
+    </div>
 </div>

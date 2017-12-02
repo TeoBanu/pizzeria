@@ -10,8 +10,13 @@ export class UserService {
     private loginUrl = 'http://localhost:8080/api/login';
 
     isLoggedInSubject = new BehaviorSubject<Boolean>(this.hasUserId());
+    isAdminSubject = new BehaviorSubject<Boolean>(false);
 
     constructor(private http: Http) {
+      let id = localStorage.getItem('id');
+      if(id) {
+          this.getUser(id).then((user: User) => this.isAdminSubject.next(user.isAdmin));
+      }
     }
 
     getUser(id: String): Promise<void | User> {
@@ -42,6 +47,7 @@ export class UserService {
             let usr: User = response.json() as User;
             localStorage.setItem('id', usr._id);
             this.isLoggedInSubject.next(true);
+            this.isAdminSubject.next(usr.isAdmin);
             return usr;
         })
         .catch(this.handleError);
@@ -50,10 +56,15 @@ export class UserService {
     logout() {
         localStorage.removeItem('id');
         this.isLoggedInSubject.next(false);
+        this.isAdminSubject.next(false);
     }
 
     isLoggedIn(): Observable<boolean> {
         return this.isLoggedInSubject.asObservable();
+    }
+
+    isAdmin(): Observable<boolean> {
+        return this.isAdminSubject.asObservable();
     }
 
     private hasUserId(): boolean {
