@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
-import {Order} from './Order';
-import {OrderService} from './order.service';
+import {Order} from '../order';
+import {OrderService} from '../order.service';
 import {CartElement} from './cart-element';
 
 @Component({

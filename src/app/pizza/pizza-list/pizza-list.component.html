@@ -10,7 +10,7 @@
                     </div>
                     <div class="col-md-2 text-center">
                         {{pizza.price}} RON
-                        <img (click)="addToCart(pizza)" src="../../../assets/cart.png" width="20"/>
+                        <img *ngIf="!isAdmin" (click)="addToCart(pizza)" src="../../../assets/cart.png" width="20"/>
                         <img *ngIf="isLoggedIn && isAdmin" (click)="selectPizza(pizza)" src="../../../assets/edit.svg" width="20"/>
                     </div>
                 </div>

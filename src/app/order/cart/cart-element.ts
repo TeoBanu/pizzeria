@@ -1,4 +1,4 @@
-import {Pizza} from '../pizza/Pizza';
+import {Pizza} from '../../pizza/pizza';
 
 export class CartElement {
   pizza: Pizza;
