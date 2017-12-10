@@ -13,7 +13,7 @@ export default class OrderService {
   }
 
   static show(req, res, next) {
-    return Order.findOne({_id: req.params._id})
+    return this.getById(req.params._id)
       .then(ServiceHelper.respondWithResult(res, 200))
       .catch(ServiceHelper.handleError(next, 404));
   }
@@ -51,5 +51,20 @@ export default class OrderService {
       })
       .then(ServiceHelper.respondWithResult(res, 200))
       .catch(ServiceHelper.handleError(next, 404));
+  }
+
+  static getById(orderId) {
+    return Order.findOne({_id: orderId})
+      .populate({
+        path: 'elements.pizza',
+        select: 'name',
+        model: 'Pizza'
+      })
+      .populate(
+        {
+          path: 'userId',
+          select: 'street city phone',
+          model: 'User'
+        }).exec();
   }
 }

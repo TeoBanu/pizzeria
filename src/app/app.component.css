@@ -2,4 +2,6 @@
   height: calc(100vh - 56px);
   padding: 5px;
   position: relative;
+  overflow-y: auto;
+  overflow-x: hidden;
 }

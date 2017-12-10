@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Inject, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 import {Pizza} from '../pizza';
 import {PizzaService} from '../pizza.service';
@@ -6,6 +6,7 @@ import {UserService} from '../../login/user.service';
 import {Observable} from 'rxjs';
 import {Order} from '../../order/order';
 import {CartElement} from '../../order/cart/cart-element';
+import {WindowRef} from '../../window-ref.service';
 
 @Component({
   selector: 'pizza-list',
@@ -24,7 +25,8 @@ export class PizzaListComponent implements OnInit {
 
   constructor(private pizzaService: PizzaService,
               private userService: UserService,
-              private router: Router) {
+              private router: Router,
+              private window: WindowRef) {
   }
 
   ngOnInit() {
@@ -69,7 +71,7 @@ export class PizzaListComponent implements OnInit {
   createNewCart(): Order {
     let cartPizzas: Pizza[] = [];
     let cartElements: CartElement[] = [];
-    return {userId: localStorage.getItem('id'), elements: cartElements, deliveryTime: '0', completed: false};
+    return {userId: localStorage.getItem('id'), elements: cartElements, deliveryTime: 0, completed: false};
   }
 
   addToCart(pizza: Pizza) {
@@ -113,6 +115,7 @@ export class PizzaListComponent implements OnInit {
 
   createOrder = (order: Order) => {
     this.cart = this.createNewCart();
+    this.router.navigate(['/order-status']);
   };
 
 }

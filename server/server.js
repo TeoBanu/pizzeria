@@ -13,13 +13,15 @@ let mongoose = require('mongoose');
 mongoose.Promise = require('bluebird');
 
 let app = express();
+let http = require('http').Server(app);
+let  io = require('socket.io')(http);
 app.use(bodyParser.json());
 
 // Create link to Angular build directory
 let distDir = __dirname + "/dist/";
 app.use(express.static(distDir));
 
-app.use(function (req, res, next) {
+app.use((req, res, next) => {
     // Website you wish to allow to connect
     res.setHeader('Access-Control-Allow-Origin', 'http://localhost:4200');
     res.setHeader("Access-Control-Allow-Headers", "X-Requested-With,content-type");
@@ -35,11 +37,29 @@ let dbConnection = mongoose.connect('mongodb://localhost/Pizzeria', {
 dbConnection.then((database) => {
     console.log("Database connection ready");
     gridfs.init(mongoose);
-    // Initialize the app.
-    let server = app.listen(process.env.PORT || 8080, () => {
-        let port = server.address().port;
-        console.log("App now running on port", port);
-    });
+
+});
+
+io.on('connection', (socket) => {
+
+  console.log('user connected');
+
+  socket.on('disconnect', function() {
+    console.log('user disconnected');
+  });
+
+  socket.on('delivery-time-added', (order) => {
+    io.sockets.emit('delivery-time', order);
+  });
+  socket.on('new-order', (orderId) => {
+    OrderService.getById(orderId)
+      .then(order => io.sockets.emit('order', order))
+      .catch(e => console.log(e));
+  });
+});
+
+http.listen(8080, () => {
+  console.log("App now running on port", 8080);
 });
 
 // Log in user

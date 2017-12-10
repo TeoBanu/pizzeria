@@ -6,8 +6,7 @@ import {CartElement} from './cart-element';
 @Component({
   selector: 'cart',
   templateUrl: './cart.component.html',
-  styleUrls: ['./cart.component.css'],
-  providers: [OrderService]
+  styleUrls: ['./cart.component.css']
 })
 export class CartComponent {
     @Input()
@@ -22,6 +21,7 @@ export class CartComponent {
     createOrder() {
        this.orderService.createOrder(this.cart).then((newOrder: Order) => {
             this.createHandler(newOrder);
+            this.orderService.emitNewOrder(newOrder._id);
         });
     }
 
