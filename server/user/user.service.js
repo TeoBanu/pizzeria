@@ -10,6 +10,7 @@ export default class UserService {
      */
     static create(req, res, next) {
         let user = new User(req.body);
+        user.isAdmin = false;
         return AuthService.hashUsersPassword(user)
             .then(u => u.save())
             .then(ServiceHelper.respondWithResult(res, 200))
